@@ -1,4 +1,4 @@
 flask
 torch
 torchvision
-pillo
+pillow
