@@ -1,0 +1,519 @@
+body {
+    background: #f7f9fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+.sidebar {
+    background: #2563eb;
+    color: white;
+    width: 240px;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2em 1em 1em 1em;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2em;
+}
+.sidebar-logo {
+    height: 38px;
+    margin-right: 12px;
+}
+.sidebar-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.sidebar nav ul li {
+    padding: 0.8em 1em;
+    margin-bottom: 0.5em;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    transition: background 0.2s;
+}
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+    height: 100%;
+    font-size: 1.08em;
+    transition: color 0.2s;
+}
+
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+    color: #ffd600; /* Amarillo médico para el activo, o pon white si prefieres */
+    text-decoration: none;
+}
+
+.sidebar nav ul li {
+    padding: 0.8em 1em;
+    margin-bottom: 0.5em;
+    border-radius: 8px;
+    cursor: pointer;
+    background: none;
+    transition: background 0.2s;
+}
+
+.sidebar nav ul li.active,
+.sidebar nav ul li:hover {
+    background: #174ea6;
+}
+.main-content {
+    flex: 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.main-header {
+    background: #fff;
+    padding: 1.5em 2.5em 1em 2.5em;
+    border-bottom: 1px solid #e3e3e3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main-header h1 {
+    color: #2563eb;
+    margin: 0;
+    font-size: 1.5em;
+}
+.user-info {
+    color: #2563eb;
+    font-weight: 500;
+    font-size: 1.1em;
+}
+.diagnosis-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2em 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.diagnosis-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 2em 2.5em;
+    width: 100%;
+    max-width: 100%; /* O puedes quitar max-width por completo */
+    overflow-x: auto;
+    box-sizing: border-box;
+    margin: 0 2em;
+    margin-top: 0;
+}
+.diagnosis-card h2 {
+    color: #2563eb;
+    margin-top: 0;
+}
+.upload-form {
+    margin: 2em 0 1em 0;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+.upload-form input[type="file"] {
+    margin-bottom: 0;
+}
+.upload-form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7em 2em;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.upload-form button:hover {
+    background: #174ea6;
+}
+.result-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2em;
+    margin-top: 2em;
+    width: 100%;
+}
+.xray-img {
+    width: 320px;      /* o el tamaño que prefieras, por ejemplo 300px o 350px */
+    height: 320px;     /* igual que el width para que sea cuadrada */
+    object-fit: cover; /* recorta y centra la imagen si no es cuadrada */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 1em;
+    background: #fff;
+}
+.diagnosis-right {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.result-card {
+    background: #e3f2fd;
+    border-radius: 10px;
+    padding: 1.2em 1.5em;
+    font-size: 1.1em;
+    min-width: 220px;
+    margin-bottom: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+.pred-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 0.5em;
+}
+.save-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.patient-fields {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.patient-fields input, .patient-fields select {
+    padding: 0.5em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    min-width: 120px;
+}
+.normal {
+    color: #43a047;
+    font-weight: bold;
+}
+.pneumonia {
+    color: #e53935;
+    font-weight: bold;
+}
+@media (max-width: 900px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        flex-direction: row;
+        width: 100%;
+        min-width: unset;
+        padding: 1em;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .main-content {
+        padding: 0;
+    }
+    .diagnosis-section {
+        padding: 1em 0;
+    }
+    .diagnosis-card {
+        padding: 1em 0.5em;
+        margin: 0 0.5em;
+    }
+    .result-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+    }
+    .diagnosis-right {
+        align-items: center;
+        width: 100%;
+    }
+    .save-form, .patient-fields {
+        align-items: center;
+        justify-content: center;
+    }
+    .xray-img {
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+        min-width: 180px;
+    }
+}
+@media (max-width: 600px) {
+    .main-header, .diagnosis-card {
+        padding: 1em 0.5em;
+    }
+    .sidebar {
+        font-size: 0.95em;
+        padding: 0.7em 0.5em;
+    }
+    .result-card {
+        font-size: 1em;
+        padding: 0.7em 0.7em;
+    }
+}
+#splash-screen {
+    position: fixed;
+    z-index: 9999;
+    background: #2563eb;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.splash-logo {
+    width: 80px;
+    margin-bottom: 1em;
+}
+.loader {
+    border: 6px solid #e3f2fd;
+    border-top: 6px solid #174ea6;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+    margin-top: 1.5em;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+th, td {
+    border: 1px solid #e3e3e3;
+    padding: 0.5em 0.7em;
+    text-align: left;
+}
+th {
+    background: #2563eb;
+    color: white;
+}
+tr:nth-child(even) {
+    background: #f7f9fa;
+}
+.save-form {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.guardar-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7em 2em;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.2s;
+}
+.guardar-btn:hover {
+    background: #174ea6;
+}
+.mini-xray {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    border: 1px solid #e3e3e3;
+    background: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.mini-xray:hover {
+    box-shadow: 0 2px 12px rgba(37,99,235,0.25);
+}
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+.close {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+}
+table th {
+    font-size: 1.08em;
+    letter-spacing: 0.5px;
+}
+table td {
+    vertical-align: middle;
+}
+
+.patient-fields {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    align-items: flex-end;
+}
+
+.patient-row {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.patient-row input, .patient-row select {
+    padding: 0.5em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    min-width: 120px;
+    flex: 1 1 0;
+}
+
+.patient-btn-row {
+    justify-content: center;
+}
+
+.guardar-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7em 2em;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 0.5em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.2s;
+}
+.guardar-btn:hover {
+    background: #174ea6;
+}
+
+@media (max-width: 900px) {
+    .patient-row {
+        flex-direction: column;
+        gap: 0.5em;
+    }
+    .patient-fields {
+        align-items: center;
+    }
+}
+
+.menu-toggle {
+    display: none;
+    position: absolute;
+    top: 1.5em;
+    left: 1.5em;
+    background: #2563eb;
+    color: white;
+    border: none;
+    font-size: 2em;
+    border-radius: 8px;
+    z-index: 2000;
+    padding: 0.2em 0.5em;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: block;
+    }
+    .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        height: 100vh;
+        width: 240px;
+        min-width: 180px;
+        background: #2563eb;
+        z-index: 1500;
+        transition: left 0.3s;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.10);
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .main-content {
+        margin-left: 0 !important;
+    }
+    /* Fondo oscuro al abrir el menú */
+    body.menu-open::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+}
+@media (max-width: 900px) {
+    .main-header {
+        padding-left: 3.5em; /* deja espacio para el botón */
+    }
+}

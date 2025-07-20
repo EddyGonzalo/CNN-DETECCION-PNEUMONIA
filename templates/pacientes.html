@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Pacientes - MedAI Clinic{% endblock %}
+{% block content %}
+<section class="diagnosis-section">
+    <div class="diagnosis-card">
+        <h2>Historial de Pacientes</h2>
+        <input type="text" id="searchInput" placeholder="Buscar por nombre..." style="margin-bottom:1em; padding:0.5em; border-radius:6px; border:1px solid #ccc; width:220px;">
+        <table>
+            <tr>
+                <th>Fecha</th>
+                <th>Radiografía</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Sexo</th>
+                <th>Predicción</th>
+                <th>Confianza</th>
+                <th>Observaciones</th>
+            </tr>
+            {% for p in historial %}
+            <tr>
+                <td>{{ p.fecha }}</td>
+                <td>
+                    {% if p.filename %}
+                    <img src="{{ url_for('static', filename='uploads/' + p.filename) }}" alt="Miniatura" class="mini-xray" onclick="showModal(this.src)">
+                    {% else %}
+                        <span style="color:#aaa;">Sin imagen</span>
+                    {% endif %}
+                </td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.edad }}</td>
+                <td>{{ p.sexo }}</td>
+                <td>
+                    {% if p.prediccion == "NORMAL" %}
+                        <span class="normal">{{ p.prediccion }}</span>
+                    {% else %}
+                        <span class="pneumonia">{{ p.prediccion }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ '%.2f'|format(p.confianza) }}%</td>
+                <td>{{ p.observaciones or "Ninguna" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <!-- Modal para imagen grande -->
+        <div id="imgModal" class="modal" style="display:none;">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+    </div>
+</section>
+<!-- Modal para imagen grande -->
+<div id="imgModal" class="modal" style="display:none;">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+{% endblock %}

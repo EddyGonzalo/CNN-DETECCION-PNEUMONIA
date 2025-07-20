@@ -1,0 +1,32 @@
+[
+  {
+    "nombre": "Eddy Gonzalo",
+    "edad": "22",
+    "sexo": "Masculino",
+    "observaciones": "Ninguna",
+    "filename": "person12_bacteria_48.jpeg",
+    "prediccion": "PNEUMONIA",
+    "confianza": 94.78811621665955,
+    "fecha": "2025-07-20 14:12"
+  },
+  {
+    "nombre": "Eddy Gonzalo",
+    "edad": "22",
+    "sexo": "Masculino",
+    "observaciones": "Ninguna",
+    "filename": "p2.jpeg",
+    "prediccion": "NORMAL",
+    "confianza": 91.32921695709229,
+    "fecha": "2025-07-20 14:14"
+  },
+  {
+    "nombre": "dfdffd",
+    "edad": "23",
+    "sexo": "Femenino",
+    "observaciones": "Ninguna",
+    "filename": "p3.jpg",
+    "prediccion": "NORMAL",
+    "confianza": 91.46085977554321,
+    "fecha": "2025-07-20 14:31"
+  }
+]

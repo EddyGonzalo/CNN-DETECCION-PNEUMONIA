@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Diagnóstico - MedAI Clinic{% endblock %}
+{% block content %}
+<section class="diagnosis-section">
+    <div class="diagnosis-card">
+        <h2 style="text-align:center;">Radiografías de Tórax</h2>
+        <p style="text-align:center; font-size:1.1em;">
+            Plataforma de apoyo al diagnóstico de <b>neumonía</b> mediante inteligencia artificial.<br>
+            <b>Importante:</b> Este sistema es solo de apoyo y no reemplaza la valoración médica profesional.<br>
+            Sube una radiografía y obtén una predicción automática junto con el nivel de confianza del modelo.
+        </p>
+        <form method="post" enctype="multipart/form-data" class="upload-form" id="diagnosis-form" style="justify-content:center;">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit" id="analyze-btn">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Analizar radiografía
+            </button>
+        </form>
+        {% if filename %}
+<div class="result-flex">
+    <div class="img-loader-container" id="img-loader-container">
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Radiografía subida" class="xray-img" id="xray-img">
+        <div class="img-overlay" id="img-overlay" style="display:none;">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <div class="diagnosis-right">
+        <div class="result-card">
+            <div class="pred-row">
+                <span><b>Predicción:</b>
+                    {% if prediction == "NORMAL" %}
+                        <span class="normal">{{ prediction }}</span>
+                    {% else %}
+                        <span class="pneumonia">{{ prediction }}</span>
+                    {% endif %}
+                </span>
+                <span style="margin-left:2em;"><b>Confianza:</b> {{ '%.2f'|format(confidence) }}%</span>
+            </div>
+            <div>
+                {% if prediction == "NORMAL" %}
+                    <span class="normal">No se detectan signos de neumonía.</span>
+                {% else %}
+                    <span class="pneumonia">Se detectan posibles signos de neumonía.</span>
+                {% endif %}
+            </div>
+        </div>
+        <form method="post" class="save-form" id="save-form">
+            <div class="patient-fields">
+                <div class="patient-row">
+                    <input type="hidden" name="filename" value="{{ filename }}">
+                    <input type="hidden" name="prediction" value="{{ prediction }}">
+                    <input type="hidden" name="confidence" value="{{ confidence }}">
+                    <input type="text" name="nombre" placeholder="Nombre del paciente" value="{{ nombre }}" required>
+                    <input type="number" name="edad" placeholder="Edad" min="0" value="{{ edad }}" required>
+                </div>
+                <div class="patient-row">
+                    <select name="sexo" required>
+                        <option value="">Sexo</option>
+                        <option value="Masculino" {% if sexo == "Masculino" %}selected{% endif %}>Masculino</option>
+                        <option value="Femenino" {% if sexo == "Femenino" %}selected{% endif %}>Femenino</option>
+                        <option value="Otro" {% if sexo == "Otro" %}selected{% endif %}>Otro</option>
+                    </select>
+                    <input type="text" name="observaciones" placeholder="Observaciones" value="{{ observaciones }}">
+                </div>
+                <div class="patient-row patient-btn-row">
+                    <button type="submit" name="guardar" value="1" class="guardar-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar predicción
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+    </div>
+</section>
+<!-- Modal de confirmación -->
+<div id="successModal" class="modal" style="display:none;">
+    <div class="modal-content" style="background:#fff; padding:2em; border-radius:12px; text-align:center; min-width:300px;">
+        <span class="close" onclick="closeSuccessModal()" style="position:absolute;top:20px;right:30px;font-size:2em;cursor:pointer;">&times;</span>
+        <i class="fa-solid fa-circle-check" style="color:#2563eb;font-size:3em;margin-bottom:0.5em;"></i>
+        <h3 style="color:#2563eb;">¡Predicción guardada!</h3>
+        <p>La información del paciente y la predicción han sido almacenadas correctamente.</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var saveForm = document.getElementById('save-form');
+    if(saveForm){
+        saveForm.addEventListener('submit', function(e){
+            setTimeout(function(){
+                showSuccessModal();
+            }, 200); // Pequeño delay para que el submit se procese
+        });
+    }
+});
+
+function showSuccessModal() {
+    var modal = document.getElementById("successModal");
+    modal.style.display = "flex";
+}
+function closeSuccessModal() {
+    document.getElementById("successModal").style.display = "none";
+}
+window.onclick = function(event) {
+    var modal = document.getElementById("successModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+{% endblock %}

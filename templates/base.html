@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MedAI Clinic{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<script>
+    function showModal(src) {
+        var modal = document.getElementById("imgModal");
+        var modalImg = document.getElementById("modalImg");
+        modal.style.display = "flex";
+        modalImg.src = src;
+    }
+    function closeModal() {
+        document.getElementById("imgModal").style.display = "none";
+    }
+    window.onclick = function(event) {
+        var modal = document.getElementById("imgModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var saveForm = document.getElementById('save-form');
+        if(saveForm){
+            saveForm.addEventListener('submit', function(e){
+                setTimeout(function(){
+                    showSuccessModal();
+                }, 200); // Pequeño delay para que el submit se procese
+            });
+        }
+    });
+
+    function showSuccessModal() {
+        var modal = document.getElementById("successModal");
+        modal.style.display = "flex";
+    }
+    function closeSuccessModal() {
+        document.getElementById("successModal").style.display = "none";
+    }
+    window.onclick = function(event) {
+        var modal = document.getElementById("successModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuToggle = document.getElementById('menuToggle');
+        var sidebar = document.querySelector('.sidebar');
+        menuToggle && menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            document.body.classList.toggle('menu-open');
+        });
+        // Cierra el menú al hacer click fuera del sidebar
+        document.addEventListener('click', function(e) {
+            if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuToggle) {
+                sidebar.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+        });
+        // Cierra el menú al hacer click en un enlace del sidebar
+        sidebar && sidebar.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    });
+    </script>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <i class="fa fa-bars"></i>
+        </button>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://cdn-icons-png.flaticon.com/512/2920/2920277.png" alt="Logo" class="sidebar-logo">
+                <span class="sidebar-title">MedAI Clinic</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="{% if active_page == 'diagnostico' %}active{% endif %}">
+                        <a href="{{ url_for('index') }}"><i class="fa-solid fa-x-ray"></i> Diagnóstico</a>
+                    </li>
+                    <li class="{% if active_page == 'pacientes' %}active{% endif %}">
+                        <a href="{{ url_for('pacientes') }}"><i class="fa-solid fa-user-doctor"></i> Pacientes</a>
+                    </li>
+                    <li class="{% if active_page == 'estadisticas' %}active{% endif %}">
+                        <a href="{{ url_for('estadisticas') }}"><i class="fa-solid fa-chart-line"></i> Estadísticas</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa-solid fa-gear"></i> Configuración</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Diagnóstico de Neumonía por Radiografía</h1>
+                <span class="user-info"><i class="fa-solid fa-user-nurse"></i> Dr. Eddy</span>
+            </header>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
